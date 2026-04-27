@@ -18,7 +18,10 @@ namespace InventarIT.Models
         public string NumeAngajat { get; set; } = string.Empty;
         public string DenumireEchipament { get; set; } = string.Empty;
         public string NumarSerie { get; set; } = string.Empty;
+        public decimal ValoareEchipament { get; set; }
 
         public bool EsteActiva => DataReturnare == null;
+        public string StatusAtribuire =>
+            EsteActiva ? "Activa" : "Returnata";
     }
 }

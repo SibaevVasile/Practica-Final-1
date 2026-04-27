@@ -16,5 +16,7 @@ namespace InventarIT.Models
         public string Telefon { get; set; } = string.Empty;
 
         public string NumeComplet => $"{Nume} {Prenume}";
+
+        public override string ToString() => NumeComplet;
     }
 }
