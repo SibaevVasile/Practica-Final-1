@@ -1,0 +1,28 @@
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bin/
+obj/
+
+## NuGet
+*.nupkg
+packages/
+!**/packages/repositories.config
+
+## Windows
+Thumbs.db
+Desktop.ini
+
+## SQL Server
+*.mdf
+*.ldf
+*.ndf
