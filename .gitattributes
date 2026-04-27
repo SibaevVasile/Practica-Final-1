@@ -1,0 +1,11 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# C# files
+*.cs     text diff=csharp
+*.xaml   text diff=xml
+*.csproj text diff=xml
+*.sln    text diff=csharp
+
+# SQL files
+*.sql    text
