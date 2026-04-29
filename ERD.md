@@ -75,3 +75,8 @@
     în același timp
 - CHECK (Valoare > 0) pe tabelul Echipament
   → valoarea unui echipament nu poate fi negativă sau zero
+
+## Ordinea de creare a tabelelor în SQL
+1. Angajat     ← nu depinde de nimeni
+2. Echipament  ← nu depinde de nimeni
+3. Atribuire   ← depinde de Angajat și Echipament (FK)
