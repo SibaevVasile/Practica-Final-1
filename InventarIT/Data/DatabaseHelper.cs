@@ -18,10 +18,7 @@ namespace InventarIT.Data
 
         private static string GetConnectionString()
         {
-            return "Server=localhost\\SQLEXPRESS;" +
-                   "Database=InventarITDB;" +
-                   "Trusted_Connection=True;" +
-                   "TrustServerCertificate=True;";
+            return @"Data Source=SIBAEV-LEGION\SQLEXPRESS;Initial Catalog=InventarITDB;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;Packet Size=4096;Command Timeout=0";
         }
 
         public SqlConnection GetConnection()
