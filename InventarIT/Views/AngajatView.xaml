@@ -1,0 +1,10 @@
+﻿<Page x:Class="InventarIT.Views.AngajatView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Angajati">
+    <Grid>
+        <TextBlock Text="Modul Angajați — în implementare"
+                   FontSize="20" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" Foreground="Gray"/>
+    </Grid>
+</Page>
