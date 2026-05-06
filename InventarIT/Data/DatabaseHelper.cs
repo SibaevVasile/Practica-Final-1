@@ -118,5 +118,63 @@ namespace InventarIT.Data
             return lista;
         }
 
+        // =============================================
+        // Atribuiri (cu JOIN)
+        // =============================================
+        public List<Atribuire> GetAllAtribuiri()
+        {
+            var lista = new List<Atribuire>();
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+                    SELECT
+                        at.IdAtribuire,
+                        at.IdEchipament,
+                        at.IdAngajat,
+                        at.DataAtribuire,
+                        at.DataReturnare,
+                        at.Observatii,
+                        a.Nume + ' ' + a.Prenume AS NumeAngajat,
+                        e.Denumire               AS DenumireEchipament,
+                        e.NumarSerie,
+                        e.Valoare
+                    FROM Atribuire at
+                    JOIN Angajat    a ON at.IdAngajat    = a.IdAngajat
+                    JOIN Echipament e ON at.IdEchipament = e.IdEchipament
+                    ORDER BY at.DataAtribuire DESC", con);
+
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(new Atribuire
+                    {
+                        IdAtribuire = reader.GetInt32(0),
+                        IdEchipament = reader.GetInt32(1),
+                        IdAngajat = reader.GetInt32(2),
+                        DataAtribuire = reader.GetDateTime(3),
+                        DataReturnare = reader.IsDBNull(4)
+                                               ? null
+                                               : reader.GetDateTime(4),
+                        Observatii = reader.IsDBNull(5)
+                                               ? string.Empty
+                                               : reader.GetString(5),
+                        NumeAngajat = reader.GetString(6),
+                        DenumireEchipament = reader.GetString(7),
+                        NumarSerie = reader.GetString(8),
+                        ValoareEchipament = reader.GetDecimal(9)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la citire atribuiri:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            return lista;
+        }
     }
 }
