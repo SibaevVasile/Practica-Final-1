@@ -15,7 +15,8 @@ namespace InventarIT.Models
         public string Producator { get; set; } = string.Empty;
         public decimal Valoare { get; set; }
         public string Status { get; set; } = "Disponibil";
-
+        public string ValoareFormatata =>
+            $"{Valoare:N2} lei";
         public override string ToString() =>
             $"{Denumire} ({NumarSerie})";
     }
