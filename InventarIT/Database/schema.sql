@@ -60,8 +60,6 @@ CREATE TABLE Atribuire (
     CONSTRAINT FK_Atribuire_Angajat
         FOREIGN KEY (IdAngajat)
         REFERENCES Angajat(IdAngajat),
-    CONSTRAINT UQ_EchipamentActiv
-        UNIQUE (IdEchipament, DataReturnare)
 );
 GO
 
