@@ -23,5 +23,9 @@ namespace InventarIT.Models
         public bool EsteActiva => DataReturnare == null;
         public string StatusAtribuire =>
             EsteActiva ? "Activa" : "Returnata";
+        public string DataReturnareAfisare =>
+            DataReturnare.HasValue
+            ? DataReturnare.Value.ToString("dd.MM.yyyy")
+            : "—";
     }
 }
