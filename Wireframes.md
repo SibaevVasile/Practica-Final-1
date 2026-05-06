@@ -68,3 +68,10 @@
 +------------------------------------------+
 |              [Inchide]                   |
 +------------------------------------------+
+
+## Flux navigare
+MainWindow
+├── click "Echipamente" → EchipamentView
+├── click "Angajati"   → AngajatView
+├── click "Atribuiri"  → AtribuireView
+└── click "Raport"     → RaportView (fereastra separata)
