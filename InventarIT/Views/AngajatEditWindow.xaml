@@ -1,0 +1,63 @@
+﻿<Window x:Class="InventarIT.Views.AngajatEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Angajat" Height="420" Width="420"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <StackPanel Margin="25">
+
+        <!-- Titlu dinamic -->
+        <TextBlock x:Name="txtTitlu"
+                   Text="Adaugă Angajat"
+                   FontSize="18" FontWeight="Bold"
+                   Foreground="#2C3E50" Margin="0,0,0,20"/>
+
+        <!-- Nume -->
+        <TextBlock Text="Nume *" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtNume" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,12"/>
+
+        <!-- Prenume -->
+        <TextBlock Text="Prenume *" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtPrenume" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,12"/>
+
+        <!-- Departament -->
+        <TextBlock Text="Departament *" FontSize="13" Margin="0,0,0,4"/>
+        <ComboBox x:Name="cmbDepartament" Height="32"
+                  FontSize="13" Padding="6,4" Margin="0,0,0,12">
+            <ComboBoxItem Content="IT"/>
+            <ComboBoxItem Content="HR"/>
+            <ComboBoxItem Content="Financiar"/>
+            <ComboBoxItem Content="Marketing"/>
+            <ComboBoxItem Content="Management"/>
+            <ComboBoxItem Content="Altul"/>
+        </ComboBox>
+
+        <!-- Email -->
+        <TextBlock Text="Email *" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtEmail" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,12"/>
+
+        <!-- Telefon -->
+        <TextBlock Text="Telefon" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtTelefon" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,20"/>
+
+        <!-- Butoane -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button x:Name="btnSalveaza"
+                    Content="💾 Salvează"
+                    Width="110" Height="35" Margin="0,0,10,0"
+                    Background="#27AE60" Foreground="White"
+                    FontSize="13" Click="btnSalveaza_Click"/>
+            <Button Content="✖ Anulează"
+                    Width="110" Height="35"
+                    Background="#95A5A6" Foreground="White"
+                    FontSize="13" Click="btnAnuleaza_Click"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>
