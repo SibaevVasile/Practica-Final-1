@@ -176,5 +176,65 @@ namespace InventarIT.Data
             }
             return lista;
         }
+        // CRUD Angajat
+        public void AddAngajat(Angajat a)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+            INSERT INTO Angajat
+                (Nume, Prenume, Departament, Email, Telefon)
+            VALUES
+                (@Nume, @Prenume, @Departament, @Email, @Telefon)",
+                    con);
+                cmd.Parameters.AddWithValue("@Nume", a.Nume);
+                cmd.Parameters.AddWithValue("@Prenume", a.Prenume);
+                cmd.Parameters.AddWithValue("@Departament", a.Departament);
+                cmd.Parameters.AddWithValue("@Email", a.Email);
+                cmd.Parameters.AddWithValue("@Telefon", a.Telefon);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la adăugare angajat:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        public void UpdateAngajat(Angajat a)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+            UPDATE Angajat SET
+                Nume        = @Nume,
+                Prenume     = @Prenume,
+                Departament = @Departament,
+                Email       = @Email,
+                Telefon     = @Telefon
+            WHERE IdAngajat = @Id", con);
+                cmd.Parameters.AddWithValue("@Nume", a.Nume);
+                cmd.Parameters.AddWithValue("@Prenume", a.Prenume);
+                cmd.Parameters.AddWithValue("@Departament", a.Departament);
+                cmd.Parameters.AddWithValue("@Email", a.Email);
+                cmd.Parameters.AddWithValue("@Telefon", a.Telefon);
+                cmd.Parameters.AddWithValue("@Id", a.IdAngajat);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la modificare angajat:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
     }
 }
