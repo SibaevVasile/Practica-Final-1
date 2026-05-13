@@ -236,5 +236,25 @@ namespace InventarIT.Data
             }
         }
 
+        public void DeleteAngajat(int id)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(
+                    "DELETE FROM Angajat WHERE IdAngajat = @Id", con);
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la ștergere angajat:\n{ex.Message}\n\n" +
+                    "Verificați că angajatul nu are atribuiri active.",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
     }
 }
