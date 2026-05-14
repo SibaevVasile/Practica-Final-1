@@ -41,20 +41,54 @@ namespace InventarIT.Views
                     .ToList();
             }
         }
-
         private void btnAdauga_Click(object sender, RoutedEventArgs e)
         {
-            // Implementat la Issue #15
+            var fereastra = new AngajatEditWindow();
+            fereastra.Owner = Window.GetWindow(this);
+            if (fereastra.ShowDialog() == true)
+                IncarcaDate();
         }
 
         private void btnModifica_Click(object sender, RoutedEventArgs e)
         {
-            // Implementat la Issue #15
+            if (dgAngajati.SelectedItem is not Angajat selectat)
+            {
+                MessageBox.Show(
+                    "Selectați un angajat din listă pentru modificare.",
+                    "Atenție", MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            var fereastra = new AngajatEditWindow(selectat);
+            fereastra.Owner = Window.GetWindow(this);
+            if (fereastra.ShowDialog() == true)
+                IncarcaDate();
         }
 
         private void btnSterge_Click(object sender, RoutedEventArgs e)
         {
-            // Implementat la Issue #16
+            if (dgAngajati.SelectedItem is not Angajat selectat)
+            {
+                MessageBox.Show(
+                    "Selectați un angajat din listă pentru ștergere.",
+                    "Atenție", MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
+
+            var confirmare = MessageBox.Show(
+                $"Sigur doriți să ștergeți angajatul\n" +
+                $"'{selectat.NumeComplet}'?",
+                "Confirmare ștergere",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (confirmare == MessageBoxResult.Yes)
+            {
+                _db.DeleteAngajat(selectat.IdAngajat);
+                IncarcaDate();
+            }
         }
     }
 }
