@@ -3,39 +3,70 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Echipamente">
 
-    <DockPanel Margin="10">
+    <DockPanel Margin="15">
 
         <!-- Titlu -->
         <TextBlock DockPanel.Dock="Top"
                    Text="Gestionare Echipamente"
-                   FontSize="20" FontWeight="Bold"
-                   Margin="0,0,0,10" Foreground="#2C3E50"/>
+                   FontSize="22" FontWeight="Bold"
+                   Foreground="#2C3E50" Margin="0,0,0,12"/>
 
-        <!-- Bara de actiuni -->
+        <!-- Bara filtrare -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Producător:" VerticalAlignment="Center"
+                       FontSize="13" Margin="0,0,8,0"/>
+            <TextBox x:Name="txtFiltruProducator"
+                     Width="160" Height="30" FontSize="13"
+                     Padding="5,3" Margin="0,0,15,0"
+                     TextChanged="Filtru_Changed"/>
+
+            <TextBlock Text="Tip:" VerticalAlignment="Center"
+                       FontSize="13" Margin="0,0,8,0"/>
+            <ComboBox x:Name="cmbFiltruTip"
+                      Width="140" Height="30" FontSize="13"
+                      SelectionChanged="Filtru_Changed">
+                <ComboBoxItem Content="Toate" IsSelected="True"/>
+                <ComboBoxItem Content="Laptop"/>
+                <ComboBoxItem Content="Monitor"/>
+                <ComboBoxItem Content="Tastatura"/>
+                <ComboBoxItem Content="Imprimanta"/>
+                <ComboBoxItem Content="Telefon"/>
+            </ComboBox>
+
+            <Button Content="✖ Resetează filtre"
+                    Width="130" Height="30" Margin="15,0,0,0"
+                    Background="#95A5A6" Foreground="White"
+                    FontSize="12" Click="btnReseteazaFiltru_Click"/>
+        </StackPanel>
+
+        <!-- Butoane actiuni -->
         <StackPanel DockPanel.Dock="Bottom"
-                    Orientation="Horizontal"
-                    Margin="0,10,0,0">
-            <Button Content="➕ Adaugă"   Width="110" Height="35"
-                    Margin="0,0,8,0" Background="#27AE60"
-                    Foreground="White" FontSize="13"/>
-            <Button Content="✏️ Modifică" Width="110" Height="35"
-                    Margin="0,0,8,0" Background="#2980B9"
-                    Foreground="White" FontSize="13"/>
-            <Button Content="🗑️ Șterge"   Width="110" Height="35"
-                    Background="#E74C3C"
-                    Foreground="White" FontSize="13"/>
+                    Orientation="Horizontal" Margin="0,10,0,0">
+            <Button x:Name="btnAdauga" Content="➕ Adaugă"
+                    Width="120" Height="35" Margin="0,0,8,0"
+                    Background="#27AE60" Foreground="White"
+                    FontSize="13" Click="btnAdauga_Click"/>
+            <Button x:Name="btnModifica" Content="✏️ Modifică"
+                    Width="120" Height="35" Margin="0,0,8,0"
+                    Background="#2980B9" Foreground="White"
+                    FontSize="13" Click="btnModifica_Click"/>
+            <Button x:Name="btnSterge" Content="🗑️ Șterge"
+                    Width="120" Height="35"
+                    Background="#E74C3C" Foreground="White"
+                    FontSize="13" Click="btnSterge_Click"/>
         </StackPanel>
 
         <!-- DataGrid -->
         <DataGrid x:Name="dgEchipamente"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  AlternatingRowBackground="#F9F9F9"
+                  AlternatingRowBackground="#F5F6FA"
                   RowBackground="White"
                   GridLinesVisibility="Horizontal"
                   HeadersVisibility="Column"
-                  SelectionMode="Single">
-
+                  SelectionMode="Single"
+                  FontSize="13">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"
                     Binding="{Binding IdEchipament}" Width="45"/>
@@ -46,12 +77,13 @@
                 <DataGridTextColumn Header="Nr. Serie"
                     Binding="{Binding NumarSerie}"   Width="120"/>
                 <DataGridTextColumn Header="Producător"
-                    Binding="{Binding Producator}"   Width="110"/>
+                    Binding="{Binding Producator}"   Width="120"/>
                 <DataGridTextColumn Header="Valoare"
-                    Binding="{Binding ValoareFormatata}" Width="100"/>
+                    Binding="{Binding ValoareFormatata}" Width="110"/>
                 <DataGridTextColumn Header="Status"
                     Binding="{Binding Status}"       Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
+
     </DockPanel>
 </Page>
