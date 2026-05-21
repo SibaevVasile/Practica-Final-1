@@ -315,5 +315,48 @@ namespace InventarIT.Data
                     MessageBoxImage.Error);
             }
         }
+        public void DeleteEchipament(int id)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+
+                // Verifica atribuiri active
+                var cmdVerif = new SqlCommand(@"
+            SELECT COUNT(*) FROM Atribuire
+            WHERE IdEchipament = @Id
+            AND DataReturnare IS NULL", con);
+                cmdVerif.Parameters.AddWithValue("@Id", id);
+                int atribuiriActive = (int)cmdVerif.ExecuteScalar();
+
+                if (atribuiriActive > 0)
+                {
+                    MessageBox.Show(
+                        "Nu se poate șterge echipamentul!\n" +
+                        "Există atribuiri active asociate.\n\n" +
+                        "Returnați echipamentul înainte de ștergere.",
+                        "Ștergere imposibilă",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                var cmd = new SqlCommand(@"
+            DELETE FROM Atribuire
+            WHERE IdEchipament = @Id;
+            DELETE FROM Echipament
+            WHERE IdEchipament = @Id;", con);
+                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la ștergere echipament:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
     }
 }
