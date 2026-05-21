@@ -1,0 +1,73 @@
+﻿<Window x:Class="InventarIT.Views.EchipamentEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Echipament" Height="480" Width="420"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <StackPanel Margin="25">
+
+        <!-- Titlu dinamic -->
+        <TextBlock x:Name="txtTitlu"
+                   Text="Adaugă Echipament"
+                   FontSize="18" FontWeight="Bold"
+                   Foreground="#2C3E50" Margin="0,0,0,20"/>
+
+        <!-- Denumire -->
+        <TextBlock Text="Denumire *" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtDenumire" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,12"/>
+
+        <!-- Tip -->
+        <TextBlock Text="Tip *" FontSize="13" Margin="0,0,0,4"/>
+        <ComboBox x:Name="cmbTip" Height="32"
+                  FontSize="13" Margin="0,0,0,12">
+            <ComboBoxItem Content="Laptop"/>
+            <ComboBoxItem Content="Monitor"/>
+            <ComboBoxItem Content="Tastatura"/>
+            <ComboBoxItem Content="Imprimanta"/>
+            <ComboBoxItem Content="Telefon"/>
+            <ComboBoxItem Content="Altul"/>
+        </ComboBox>
+
+        <!-- Numar Serie -->
+        <TextBlock Text="Număr Serie *" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtNumarSerie" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,12"/>
+
+        <!-- Producator -->
+        <TextBlock Text="Producător *" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtProducator" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,12"/>
+
+        <!-- Valoare -->
+        <TextBlock Text="Valoare (lei) *" FontSize="13" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtValoare" Height="32"
+                 FontSize="13" Padding="6,4" Margin="0,0,0,12"/>
+
+        <!-- Status -->
+        <TextBlock Text="Status *" FontSize="13" Margin="0,0,0,4"/>
+        <ComboBox x:Name="cmbStatus" Height="32"
+                  FontSize="13" Margin="0,0,0,20">
+            <ComboBoxItem Content="Disponibil" IsSelected="True"/>
+            <ComboBoxItem Content="Atribuit"/>
+            <ComboBoxItem Content="Defect"/>
+            <ComboBoxItem Content="Casat"/>
+        </ComboBox>
+
+        <!-- Butoane -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button x:Name="btnSalveaza"
+                    Content="💾 Salvează"
+                    Width="110" Height="35" Margin="0,0,10,0"
+                    Background="#27AE60" Foreground="White"
+                    FontSize="13" Click="btnSalveaza_Click"/>
+            <Button Content="✖ Anulează"
+                    Width="110" Height="35"
+                    Background="#95A5A6" Foreground="White"
+                    FontSize="13" Click="btnAnuleaza_Click"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>
