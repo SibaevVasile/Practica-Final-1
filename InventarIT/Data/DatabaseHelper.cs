@@ -37,9 +37,7 @@ namespace InventarIT.Data
             catch { return false; }
         }
 
-        // =============================================
         // Echipamente
-        // =============================================
         public List<Echipament> GetAllEchipamente()
         {
             var lista = new List<Echipament>();
@@ -77,9 +75,7 @@ namespace InventarIT.Data
             return lista;
         }
 
-        // =============================================
         // Angajati
-        // =============================================
         public List<Angajat> GetAllAngajati()
         {
             var lista = new List<Angajat>();
@@ -118,9 +114,7 @@ namespace InventarIT.Data
             return lista;
         }
 
-        // =============================================
         // Atribuiri (cu JOIN)
-        // =============================================
         public List<Atribuire> GetAllAtribuiri()
         {
             var lista = new List<Atribuire>();
@@ -252,6 +246,71 @@ namespace InventarIT.Data
                 MessageBox.Show(
                     $"Eroare la ștergere angajat:\n{ex.Message}\n\n" +
                     "Verificați că angajatul nu are atribuiri active.",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        // CRUD Echipament
+        // =============================================
+        public void AddEchipament(Echipament e)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+            INSERT INTO Echipament
+                (Denumire, Tip, NumarSerie,
+                 Producator, Valoare, Status)
+            VALUES
+                (@Denumire, @Tip, @NumarSerie,
+                 @Producator, @Valoare, @Status)", con);
+                cmd.Parameters.AddWithValue("@Denumire", e.Denumire);
+                cmd.Parameters.AddWithValue("@Tip", e.Tip);
+                cmd.Parameters.AddWithValue("@NumarSerie", e.NumarSerie);
+                cmd.Parameters.AddWithValue("@Producator", e.Producator);
+                cmd.Parameters.AddWithValue("@Valoare", e.Valoare);
+                cmd.Parameters.AddWithValue("@Status", e.Status);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la adăugare echipament:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        public void UpdateEchipament(Echipament e)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+            UPDATE Echipament SET
+                Denumire   = @Denumire,
+                Tip        = @Tip,
+                NumarSerie = @NumarSerie,
+                Producator = @Producator,
+                Valoare    = @Valoare,
+                Status     = @Status
+            WHERE IdEchipament = @Id", con);
+                cmd.Parameters.AddWithValue("@Denumire", e.Denumire);
+                cmd.Parameters.AddWithValue("@Tip", e.Tip);
+                cmd.Parameters.AddWithValue("@NumarSerie", e.NumarSerie);
+                cmd.Parameters.AddWithValue("@Producator", e.Producator);
+                cmd.Parameters.AddWithValue("@Valoare", e.Valoare);
+                cmd.Parameters.AddWithValue("@Status", e.Status);
+                cmd.Parameters.AddWithValue("@Id", e.IdEchipament);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la modificare echipament:\n{ex.Message}",
                     "Eroare", MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
