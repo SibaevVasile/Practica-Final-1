@@ -1,29 +1,30 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using InventarIT.Data;
 using InventarIT.Helpers;
 using InventarIT.Models;
+
+#nullable enable
 
 namespace InventarIT.Views
 {
     public partial class AngajatEditWindow : Window
     {
         private readonly DatabaseHelper _db = new();
-        private Angajat? _angajatDeModificat;
+        private readonly Angajat? _angajat;
 
-        // Constructor pentru ADAUGARE
         public AngajatEditWindow()
         {
             InitializeComponent();
             txtTitlu.Text = "Adaugă Angajat";
         }
 
-        // Constructor pentru MODIFICARE
         public AngajatEditWindow(Angajat angajat)
         {
             InitializeComponent();
-            _angajatDeModificat = angajat;
+            _angajat = angajat;
             txtTitlu.Text = "Modifică Angajat";
-            PreCompleteazaCampuri(angajat);
+            Loaded += (s, e) => PreCompleteazaCampuri(angajat);
         }
 
         private void PreCompleteazaCampuri(Angajat a)
@@ -33,55 +34,47 @@ namespace InventarIT.Views
             txtEmail.Text = a.Email;
             txtTelefon.Text = a.Telefon;
 
-            // Selecteaza departamentul in ComboBox
-            foreach (var item in cmbDepartament.Items)
+            foreach (ComboBoxItem item in cmbDepartament.Items)
             {
-                if (item is System.Windows.Controls
-                    .ComboBoxItem cbi &&
-                    cbi.Content.ToString() == a.Departament)
+                if (item.Content.ToString() == a.Departament)
                 {
-                    cmbDepartament.SelectedItem = cbi;
+                    cmbDepartament.SelectedItem = item;
                     break;
                 }
             }
         }
 
-        private void btnSalveaza_Click(
-            object sender, RoutedEventArgs e)
+        private void BtnSalveaza_Click(object sender, RoutedEventArgs e)
         {
-            // Validare campuri
+            var dept = (cmbDepartament.SelectedItem as ComboBoxItem)
+                       ?.Content.ToString() ?? string.Empty;
+
             if (!ValidationHelper.ValidareAngajat(
-                txtNume.Text,
-                txtPrenume.Text,
-                cmbDepartament.Text,
-                txtEmail.Text))
+                    txtNume.Text, txtPrenume.Text,
+                    dept, txtEmail.Text))
                 return;
 
             var angajat = new Angajat
             {
                 Nume = txtNume.Text.Trim(),
                 Prenume = txtPrenume.Text.Trim(),
-                Departament = cmbDepartament.Text.Trim(),
+                Departament = dept,
                 Email = txtEmail.Text.Trim(),
                 Telefon = txtTelefon.Text.Trim()
             };
 
-            if (_angajatDeModificat == null)
+            if (_angajat == null)
             {
-                // ADAUGARE
                 _db.AddAngajat(angajat);
-                MessageBox.Show(
-                    "Angajatul a fost adăugat cu succes!",
+                MessageBox.Show("Angajatul a fost adăugat cu succes!",
                     "Succes", MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
             else
             {
-                // MODIFICARE
-                angajat.IdAngajat = _angajatDeModificat.IdAngajat;
+                angajat.IdAngajat = _angajat.IdAngajat;
                 _db.UpdateAngajat(angajat);
-                MessageBox.Show(
-                    "Angajatul a fost modificat cu succes!",
+                MessageBox.Show("Angajatul a fost modificat cu succes!",
                     "Succes", MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
@@ -90,8 +83,7 @@ namespace InventarIT.Views
             Close();
         }
 
-        private void btnAnuleaza_Click(
-            object sender, RoutedEventArgs e)
+        private void BtnAnuleaza_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();

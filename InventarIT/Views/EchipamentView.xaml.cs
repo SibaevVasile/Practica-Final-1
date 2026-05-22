@@ -26,6 +26,9 @@ namespace InventarIT.Views
 
         private void AplicaFiltru()
         {
+            if (dgEchipamente == null)
+                return;
+
             var producator = txtFiltruProducator.Text
                              .ToLower().Trim();
             var tip = (cmbFiltruTip.SelectedItem
