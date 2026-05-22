@@ -165,6 +165,24 @@
     </ApplicationDefinition>
     <Compile Include="Data\DatabaseHelper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Views\AngajatEditWindow.xaml.cs">
+      <DependentUpon>AngajatEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AngajatView.xaml.cs">
+      <DependentUpon>AngajatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AtribuireView.xaml.cs">
+      <DependentUpon>AtribuireView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EchipamentEditWindow.xaml.cs">
+      <DependentUpon>EchipamentEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EchipamentView.xaml.cs">
+      <DependentUpon>EchipamentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RaportView.xaml.cs">
+      <DependentUpon>RaportView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +196,30 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AngajatEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AngajatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AtribuireView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EchipamentEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EchipamentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RaportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Angajat.cs" />
@@ -209,9 +251,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DataBase\schema.sql" />
     <Content Include="DataBase\seed.sql" />

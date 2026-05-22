@@ -18,7 +18,7 @@ namespace InventarIT.Views
     /// <summary>
     /// Interaction logic for RaportView.xaml
     /// </summary>
-    public partial class RaportView : Page
+    public partial class RaportView : Window
     {
         public RaportView()
         {
