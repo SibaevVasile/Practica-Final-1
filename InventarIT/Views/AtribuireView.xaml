@@ -2,9 +2,87 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Atribuiri">
-    <Grid>
-        <TextBlock Text="Modul Atribuiri — în implementare"
-                   FontSize="20" HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Foreground="Gray"/>
-    </Grid>
+
+    <DockPanel Margin="15">
+
+        <!-- Titlu -->
+        <TextBlock DockPanel.Dock="Top"
+                   Text="Gestionare Atribuiri"
+                   FontSize="22" FontWeight="Bold"
+                   Foreground="#2C3E50" Margin="0,0,0,12"/>
+
+        <!-- Bara filtrare -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Angajat:" VerticalAlignment="Center"
+                       FontSize="13" Margin="0,0,8,0"/>
+            <ComboBox x:Name="cmbFiltruAngajat"
+                      Width="180" Height="30" FontSize="13"
+                      Margin="0,0,15,0"
+                      SelectionChanged="Filtru_Changed"/>
+
+            <TextBlock Text="Status:" VerticalAlignment="Center"
+                       FontSize="13" Margin="0,0,8,0"/>
+            <ComboBox x:Name="cmbFiltruStatus"
+                      Width="130" Height="30" FontSize="13"
+                      Margin="0,0,15,0"
+                      SelectionChanged="Filtru_Changed">
+                <ComboBoxItem Content="Toate" IsSelected="True"/>
+                <ComboBoxItem Content="Activa"/>
+                <ComboBoxItem Content="Returnata"/>
+            </ComboBox>
+
+            <Button Content="✖ Resetează"
+                    Width="100" Height="30"
+                    Background="#95A5A6" Foreground="White"
+                    FontSize="12" Click="BtnReseteazaFiltru_Click"/>
+        </StackPanel>
+
+        <!-- Butoane actiuni -->
+        <StackPanel DockPanel.Dock="Bottom"
+                    Orientation="Horizontal" Margin="0,10,0,0">
+            <Button x:Name="btnAtribuie" Content="➕ Atribuie"
+                    Width="130" Height="35" Margin="0,0,8,0"
+                    Background="#27AE60" Foreground="White"
+                    FontSize="13" Click="BtnAtribuie_Click"/>
+            <Button x:Name="btnReturneaza" Content="↩ Returnează"
+                    Width="130" Height="35" Margin="0,0,8,0"
+                    Background="#2980B9" Foreground="White"
+                    FontSize="13" Click="BtnReturneaza_Click"/>
+            <Button x:Name="btnAnuleaza" Content="🗑️ Anulează"
+                    Width="130" Height="35"
+                    Background="#E74C3C" Foreground="White"
+                    FontSize="13" Click="BtnAnuleaza_Click"/>
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="dgAtribuiri"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  AlternatingRowBackground="#F5F6FA"
+                  RowBackground="White"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  SelectionMode="Single"
+                  FontSize="13">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                    Binding="{Binding IdAtribuire}"        Width="45"/>
+                <DataGridTextColumn Header="Angajat"
+                    Binding="{Binding NumeAngajat}"        Width="160"/>
+                <DataGridTextColumn Header="Echipament"
+                    Binding="{Binding DenumireEchipament}" Width="160"/>
+                <DataGridTextColumn Header="Nr. Serie"
+                    Binding="{Binding NumarSerie}"         Width="120"/>
+                <DataGridTextColumn Header="Data Atribuire"
+                    Binding="{Binding DataAtribuire,
+                    StringFormat=dd.MM.yyyy}"              Width="120"/>
+                <DataGridTextColumn Header="Data Returnare"
+                    Binding="{Binding DataReturnareAfisare}" Width="120"/>
+                <DataGridTextColumn Header="Status"
+                    Binding="{Binding StatusAtribuire}"    Width="90"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </DockPanel>
 </Page>
