@@ -358,5 +358,96 @@ namespace InventarIT.Data
                     MessageBoxImage.Error);
             }
         }
+        // CRUD Atribuire
+        public void AddAtribuire(
+            int idEchipament, int idAngajat,
+            DateTime dataAtribuire, string status,
+            string observatii)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmdInsert = new SqlCommand(@"
+            INSERT INTO Atribuire
+                (IdEchipament, IdAngajat,
+                 DataAtribuire, Observatii)
+            VALUES
+                (@IdEchipament, @IdAngajat,
+                 @DataAtribuire, @Observatii)", con);
+                cmdInsert.Parameters.AddWithValue(
+                    "@IdEchipament", idEchipament);
+                cmdInsert.Parameters.AddWithValue(
+                    "@IdAngajat", idAngajat);
+                cmdInsert.Parameters.AddWithValue(
+                    "@DataAtribuire", dataAtribuire);
+                cmdInsert.Parameters.AddWithValue(
+                    "@Observatii",
+                    string.IsNullOrEmpty(observatii)
+                    ? DBNull.Value : observatii);
+                cmdInsert.ExecuteNonQuery();
+                var cmdUpdate = new SqlCommand(@"
+            UPDATE Echipament
+            SET Status = 'Atribuit'
+            WHERE IdEchipament = @Id", con);
+                cmdUpdate.Parameters.AddWithValue(
+                    "@Id", idEchipament);
+                cmdUpdate.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la adăugare atribuire:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        public void DeleteAtribuire(int idAtribuire)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmdGet = new SqlCommand(@"
+            SELECT IdEchipament, DataReturnare
+            FROM Atribuire
+            WHERE IdAtribuire = @Id", con);
+                cmdGet.Parameters.AddWithValue("@Id", idAtribuire);
+
+                int idEchipament = 0;
+                bool esteActiva = false;
+
+                using (var r = cmdGet.ExecuteReader())
+                {
+                    if (r.Read())
+                    {
+                        idEchipament = r.GetInt32(0);
+                        esteActiva = r.IsDBNull(1);
+                    }
+                }
+                var cmdDel = new SqlCommand(@"
+            DELETE FROM Atribuire
+            WHERE IdAtribuire = @Id", con);
+                cmdDel.Parameters.AddWithValue("@Id", idAtribuire);
+                cmdDel.ExecuteNonQuery();
+                if (esteActiva && idEchipament > 0)
+                {
+                    var cmdUpd = new SqlCommand(@"
+                UPDATE Echipament
+                SET Status = 'Disponibil'
+                WHERE IdEchipament = @Id", con);
+                    cmdUpd.Parameters.AddWithValue("@Id", idEchipament);
+                    cmdUpd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la anulare atribuire:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
     }
 }
