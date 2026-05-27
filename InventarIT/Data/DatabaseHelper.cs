@@ -502,5 +502,43 @@ namespace InventarIT.Data
             }
             catch { return false; }
         }
+        public List<Echipament> GetEchipamenteDisponibile()
+        {
+            var lista = new List<Echipament>();
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+            SELECT IdEchipament, Denumire, Tip,
+                   NumarSerie, Producator, Valoare, Status
+            FROM Echipament
+            WHERE Status = 'Disponibil'
+            ORDER BY Denumire", con);
+
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(new Echipament
+                    {
+                        IdEchipament = reader.GetInt32(0),
+                        Denumire = reader.GetString(1),
+                        Tip = reader.GetString(2),
+                        NumarSerie = reader.GetString(3),
+                        Producator = reader.GetString(4),
+                        Valoare = reader.GetDecimal(5),
+                        Status = reader.GetString(6)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la citire echipamente disponibile:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            return lista;
+        }
     }
 }
