@@ -449,5 +449,58 @@ namespace InventarIT.Data
                     MessageBoxImage.Error);
             }
         }
+        public void ReturneazaEchipament(int idAtribuire)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+
+                var cmdUpd = new SqlCommand(@"
+            UPDATE Atribuire
+            SET DataReturnare = @DataReturnare
+            WHERE IdAtribuire = @Id", con);
+                cmdUpd.Parameters.AddWithValue(
+                    "@DataReturnare", DateTime.Today);
+                cmdUpd.Parameters.AddWithValue("@Id", idAtribuire);
+                cmdUpd.ExecuteNonQuery();
+
+                var cmdGet = new SqlCommand(@"
+            SELECT IdEchipament FROM Atribuire
+            WHERE IdAtribuire = @Id", con);
+                cmdGet.Parameters.AddWithValue("@Id", idAtribuire);
+                var idEchipament = (int)cmdGet.ExecuteScalar();
+
+                var cmdEch = new SqlCommand(@"
+            UPDATE Echipament
+            SET Status = 'Disponibil'
+            WHERE IdEchipament = @Id", con);
+                cmdEch.Parameters.AddWithValue("@Id", idEchipament);
+                cmdEch.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la returnare echipament:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        public bool ExistaAtribuireActiva(int idEchipament)
+        {
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+            SELECT COUNT(*) FROM Atribuire
+            WHERE IdEchipament  = @Id
+            AND   DataReturnare IS NULL", con);
+                cmd.Parameters.AddWithValue("@Id", idEchipament);
+                return (int)cmd.ExecuteScalar() > 0;
+            }
+            catch { return false; }
+        }
     }
 }
