@@ -50,6 +50,9 @@ namespace InventarIT.Views
 
         private void AplicaFiltru()
         {
+            if (dgAtribuiri == null)
+                return;
+
             var angajatItem = cmbFiltruAngajat.SelectedItem
                               as ComboBoxItem;
             var statusItem = cmbFiltruStatus.SelectedItem
@@ -57,12 +60,10 @@ namespace InventarIT.Views
 
             var rezultat = _toateAtribuirile.AsEnumerable();
 
-            // Filtru angajat
             if (angajatItem?.Tag is int idAngajat)
                 rezultat = rezultat.Where(
                     a => a.IdAngajat == idAngajat);
 
-            // Filtru status
             var status = statusItem?.Content.ToString();
             if (status != null && status != "Toate")
                 rezultat = rezultat.Where(a =>

@@ -171,6 +171,9 @@
     <Compile Include="Views\AngajatView.xaml.cs">
       <DependentUpon>AngajatView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AtribuireEditWindow.xaml.cs">
+      <DependentUpon>AtribuireEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AtribuireView.xaml.cs">
       <DependentUpon>AtribuireView.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AngajatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AtribuireEditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
