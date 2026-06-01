@@ -1,28 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using InventarIT.Data;
 
 namespace InventarIT.Views
 {
-    /// <summary>
-    /// Interaction logic for RaportView.xaml
-    /// </summary>
     public partial class RaportView : Window
     {
+        private readonly DatabaseHelper _db = new();
+
         public RaportView()
         {
             InitializeComponent();
+            Loaded += (s, e) => IncarcaRaport();
         }
+
+        private void IncarcaRaport()
+        {
+            var date = _db.GetRaportAngajati();
+            dgRaport.ItemsSource = date;
+
+            // Statistici
+            var stats = _db.GetStatisticiInventar();
+            txtTotalAngajati.Text =
+                stats.TotalAngajati.ToString();
+            txtValoareTotala.Text =
+                $"{stats.ValoareTotala:N2} lei";
+            txtMediePerAngajat.Text =
+                $"{stats.MediePerAngajat:N2} lei";
+            txtCelMaiValoros.Text =
+                stats.CelMaiValoros;
+        }
+
+        private void BtnReincarca_Click(
+            object sender, RoutedEventArgs e)
+            => IncarcaRaport();
+
+        private void BtnExportaTxt_Click(
+            object sender, RoutedEventArgs e)
+        {
+            // Implementat la Issue #27
+        }
+
+        private void BtnInchide_Click(
+            object sender, RoutedEventArgs e)
+            => Close();
     }
 }

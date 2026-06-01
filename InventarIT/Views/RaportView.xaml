@@ -1,11 +1,107 @@
 ﻿<Window x:Class="InventarIT.Views.RaportView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Raport Sumar" Height="500" Width="700"
+        Title="Raport Sumar Inventar IT"
+        Height="615" Width="760"
         WindowStartupLocation="CenterOwner">
-    <Grid>
-        <TextBlock Text="Raport Sumar — în implementare"
-                   FontSize="20" HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Foreground="Gray"/>
-    </Grid>
+
+    <DockPanel Margin="15">
+
+        <TextBlock DockPanel.Dock="Top"
+                   Text="📊 Raport Sumar Inventar IT"
+                   FontSize="22" FontWeight="Bold"
+                   Foreground="#2C3E50" Margin="0,0,0,15"/>
+
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal"
+                    Margin="0,0,0,15">
+            <Button Content="📄 Exportă TXT"
+                    Width="140" Height="35" Margin="0,0,10,0"
+                    Background="#2980B9" Foreground="White"
+                    FontSize="13" Click="BtnExportaTxt_Click"/>
+            <Button Content="🔄 Reîncarcă"
+                    Width="120" Height="35" Margin="0,0,10,0"
+                    Background="#27AE60" Foreground="White"
+                    FontSize="13" Click="BtnReincarca_Click"/>
+            <Button Content="✖ Închide"
+                    Width="110" Height="35"
+                    Background="#95A5A6" Foreground="White"
+                    FontSize="13" Click="BtnInchide_Click"/>
+        </StackPanel>
+
+        <Border DockPanel.Dock="Top"
+                Background="#EBF5FB" CornerRadius="6"
+                BorderBrush="#AED6F1" BorderThickness="1"
+                Padding="15,10" Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Total angajați"
+                               FontSize="11" Foreground="Gray"/>
+                    <TextBlock x:Name="txtTotalAngajati"
+                               Text="—" FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#2C3E50"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Valoare totală atribuită"
+                               FontSize="11" Foreground="Gray"/>
+                    <TextBlock x:Name="txtValoareTotala"
+                               Text="—" FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#27AE60"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Medie per angajat"
+                               FontSize="11" Foreground="Gray"/>
+                    <TextBlock x:Name="txtMediePerAngajat"
+                               Text="—" FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#2980B9"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3">
+                    <TextBlock Text="Cel mai valoros"
+                               FontSize="11" Foreground="Gray"/>
+                    <TextBlock x:Name="txtCelMaiValoros"
+                               Text="—" FontSize="13"
+                               FontWeight="Bold"
+                               Foreground="#E67E22"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <DataGrid x:Name="dgRaport"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  AlternatingRowBackground="#F5F6FA"
+                  RowBackground="White"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  FontSize="13">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#"
+                    Binding="{Binding Rand}"          Width="40"/>
+                <DataGridTextColumn Header="Angajat"
+                    Binding="{Binding NumeAngajat}"   Width="180"/>
+                <DataGridTextColumn Header="Departament"
+                    Binding="{Binding Departament}"   Width="130"/>
+                <DataGridTextColumn Header="Nr. Echipamente"
+                    Binding="{Binding NrEchipamente}" Width="130"/>
+                <DataGridTextColumn Header="Valoare Totală (lei)"
+                    Binding="{Binding ValoareTotala,
+                    StringFormat=N2}"                 Width="160"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </DockPanel>
 </Window>
