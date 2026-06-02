@@ -540,5 +540,100 @@ namespace InventarIT.Data
             }
             return lista;
         }
+
+        // Raport
+        public List<RaportAngajat> GetRaportAngajati()
+        {
+            var lista = new List<RaportAngajat>();
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+                var cmd = new SqlCommand(@"
+            SELECT
+                ROW_NUMBER() OVER
+                    (ORDER BY SUM(e.Valoare) DESC) AS Rand,
+                a.Nume + ' ' + a.Prenume  AS NumeAngajat,
+                a.Departament,
+                COUNT(at.IdAtribuire)     AS NrEchipamente,
+                ISNULL(SUM(e.Valoare), 0) AS ValoareTotala
+            FROM Angajat a
+            LEFT JOIN Atribuire at
+                ON a.IdAngajat = at.IdAngajat
+                AND at.DataReturnare IS NULL
+            LEFT JOIN Echipament e
+                ON at.IdEchipament = e.IdEchipament
+            GROUP BY a.IdAngajat, a.Nume,
+                     a.Prenume, a.Departament
+            ORDER BY ValoareTotala DESC", con);
+
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lista.Add(new RaportAngajat
+                    {
+                        Rand = (int)(long)reader[0],
+                        NumeAngajat = reader.GetString(1),
+                        Departament = reader.GetString(2),
+                        NrEchipamente = (int)reader[3],
+                        ValoareTotala = reader.GetDecimal(4)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la generare raport:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            return lista;
+        }
+
+        public StatisticiInventar GetStatisticiInventar()
+        {
+            var stats = new StatisticiInventar();
+            try
+            {
+                using var con = GetConnection();
+                con.Open();
+
+                var cmd1 = new SqlCommand(@"
+            SELECT COUNT(DISTINCT IdAngajat)
+            FROM Atribuire
+            WHERE DataReturnare IS NULL", con);
+                stats.TotalAngajati = (int)cmd1.ExecuteScalar();
+
+                var cmd2 = new SqlCommand(@"
+            SELECT ISNULL(SUM(e.Valoare), 0)
+            FROM Atribuire at
+            JOIN Echipament e
+                ON at.IdEchipament = e.IdEchipament
+            WHERE at.DataReturnare IS NULL", con);
+                stats.ValoareTotala = (decimal)cmd2.ExecuteScalar();
+
+                stats.MediePerAngajat = stats.TotalAngajati > 0
+                    ? stats.ValoareTotala / stats.TotalAngajati
+                    : 0;
+
+                var cmd3 = new SqlCommand(@"
+            SELECT TOP 1 Denumire + ' (' +
+                   CAST(Valoare AS NVARCHAR) + ' lei)'
+            FROM Echipament
+            WHERE Status = 'Atribuit'
+            ORDER BY Valoare DESC", con);
+                var rezultat = cmd3.ExecuteScalar();
+                stats.CelMaiValoros = rezultat?.ToString()
+                                      ?? "N/A";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Eroare la statistici:\n{ex.Message}",
+                    "Eroare", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            return stats;
+        }
     }
 }
