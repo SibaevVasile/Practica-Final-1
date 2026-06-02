@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using InventarIT.Data;
+﻿using InventarIT.Data;
+using InventarIT.Helpers;
+using System.Windows;
 
 namespace InventarIT.Views
 {
@@ -37,7 +38,9 @@ namespace InventarIT.Views
         private void BtnExportaTxt_Click(
             object sender, RoutedEventArgs e)
         {
-            // Implementat la Issue #27
+            var date = _db.GetRaportAngajati();
+            var stats = _db.GetStatisticiInventar();
+            ExportHelper.ExportRaportTxt(date, stats);
         }
 
         private void BtnInchide_Click(
