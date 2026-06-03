@@ -617,11 +617,13 @@ namespace InventarIT.Data
                     : 0;
 
                 var cmd3 = new SqlCommand(@"
-            SELECT TOP 1 Denumire + ' (' +
-                   CAST(Valoare AS NVARCHAR) + ' lei)'
-            FROM Echipament
-            WHERE Status = 'Atribuit'
-            ORDER BY Valoare DESC", con);
+            SELECT TOP 1 e.Denumire + ' (' +
+                   CAST(e.Valoare AS NVARCHAR) + ' lei)'
+            FROM Echipament e
+            JOIN Atribuire at
+                ON e.IdEchipament = at.IdEchipament
+            WHERE at.DataReturnare IS NULL
+            ORDER BY e.Valoare DESC", con);
                 var rezultat = cmd3.ExecuteScalar();
                 stats.CelMaiValoros = rezultat?.ToString()
                                       ?? "N/A";

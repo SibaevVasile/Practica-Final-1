@@ -164,6 +164,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\DatabaseHelper.cs" />
+    <Compile Include="Helpers\ExportHelper.cs" />
+    <Compile Include="Models\RaportAngajat.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Views\AngajatEditWindow.xaml.cs">
       <DependentUpon>AngajatEditWindow.xaml</DependentUpon>
