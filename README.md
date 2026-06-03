@@ -26,17 +26,17 @@ InventarIT/
 ## Rezultate testare
 
 ### Funcționalități testate și confirmate
-- ✅ CRUD complet Angajați cu validări
-- ✅ CRUD complet Echipamente cu validări
-- ✅ Atribuire/Returnare/Anulare echipamente
-- ✅ Validare duplicat atribuiri active
-- ✅ Raport sumar cu statistici
-- ✅ Export TXT funcțional
+- CRUD complet Angajați cu validări
+- CRUD complet Echipamente cu validări
+- Atribuire/Returnare/Anulare echipamente
+- Validare duplicat atribuiri active
+- Raport sumar cu statistici
+- Export TXT funcțional
 
 ### Validări active confirmate
-- ✅ Câmpuri obligatorii nu pot fi goale
-- ✅ Format Email verificat
-- ✅ Valoare echipament > 0
-- ✅ Nu se poate atribui un echipament deja activ
-- ✅ Nu se poate șterge angajat cu atribuiri active
-- ✅ Nu se poate șterge echipament cu atribuiri active
+- Câmpuri obligatorii nu pot fi goale
+- Format Email verificat
+- Valoare echipament > 0
+- Nu se poate atribui un echipament deja activ
+- Nu se poate șterge angajat cu atribuiri active
+- Nu se poate șterge echipament cu atribuiri active
